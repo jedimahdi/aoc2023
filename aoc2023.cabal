@@ -1,58 +1,51 @@
-cabal-version:      2.4
-name:               aoc2023
-version:            0.1.0.0
-synopsis:
-homepage:
-license:            NONE
-author:             Mahdi Seyedan
-maintainer:         mahdi.se@yahoo.com
+cabal-version: 3.0
+name:          aoc2023
+version:       0.1.0.0
+
+-- synopsis:
+-- description:
+license:       BSD-3-Clause
+license-file:  LICENSE
+author:        Mahdi Seyedan
+maintainer:    mahdi.se@yahoo.com
+
+-- copyright:
+build-type:    Simple
+
+-- extra-source-files:
+
+common warnings
+  ghc-options: -Wall -Wno-unused-imports
 
 library
-    exposed-modules:  Day1
-                      Day2
-                      Day3
-                      Day4
-                      Day5
-                      Day6
-                      Day7
-    build-depends:    base ^>=4.16.4.0
-                    , array
-                    , text
-                    , bytestring
-                    , containers
-                    , vector
-                    , split
-                    , megaparsec
-                    , parser-combinators
-    hs-source-dirs:   src
-    default-language: Haskell2010
-    default-extensions:  BangPatterns
-                         ConstraintKinds
-                         DataKinds
-                         DeriveGeneric
-                         DerivingStrategies
-                         DerivingVia
-                         FlexibleContexts
-                         FlexibleInstances
-                         GeneralizedNewtypeDeriving
-                         InstanceSigs
-                         KindSignatures
-                         LambdaCase
-                         MultiParamTypeClasses
-                         OverloadedStrings
-                         OverloadedLabels
-                         RecordWildCards
-                         ScopedTypeVariables
-                         TypeApplications
-                         TypeFamilies
-                         TypeOperators
-                         GADTs
-                         ViewPatterns
-                         PatternSynonyms
-                         BlockArguments
-                         RankNTypes
-                         StandaloneDeriving
-                         NamedFieldPuns
-                         DeriveAnyClass
-                         DuplicateRecordFields
-                         OverloadedRecordDot
+  import:             warnings
+  exposed-modules:
+    Day1
+    Day2
+    Day3
+    Day4
+    Day5
+    Day6
+    Day7
+
+  -- other-modules:
+  -- other-extensions:
+  build-depends:
+    , array
+    , base                ^>=4.17.2.1
+    , bytestring
+    , containers
+    , megaparsec
+    , parser-combinators
+    , split
+    , text
+    , vector
+
+  hs-source-dirs:     src
+  default-language:   GHC2021
+  default-extensions:
+    BangPatterns
+    DuplicateRecordFields
+    OverloadedRecordDot
+    OverloadedStrings
+    RecordWildCards
