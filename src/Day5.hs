@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
+
 module Day5 where
 
 import Data.Bifunctor (bimap, first)
@@ -5,10 +7,10 @@ import Data.Ix (inRange, range)
 import Data.List (find, foldl')
 import Data.List.Split (splitOn)
 import Data.Map.Strict (Map)
-import qualified Data.Map.Strict as Map
+import Data.Map.Strict qualified as Map
 import Data.Maybe (fromJust, mapMaybe)
 import Data.Set (Set)
-import qualified Data.Set as Set
+import Data.Set qualified as Set
 import Debug.Trace (traceShow)
 
 type Range = (Int, Int)
@@ -28,32 +30,37 @@ data Almanac = Almanac
 
 parseInput :: String -> Almanac
 parseInput s =
-  let (seedsLine : mapsData) = splitOn "\n\n" s
-      seeds = map (read @Int) $ drop 1 $ words seedsLine
-      maps@[seedToSoil, soilToFertilizer, _, _, _, _, _] = map parseMap mapsData
-   in Almanac{..}
+  let
+    (seedsLine : mapsData) = splitOn "\n\n" s
+    seeds = map (read @Int) $ drop 1 $ words seedsLine
+    maps = map parseMap mapsData
+   in
+    Almanac {..}
 
 parseMap :: String -> [(Range, Range)]
 parseMap = map parseLine . drop 1 . lines
- where
-  parseLine :: String -> (Range, Range)
-  parseLine s =
-    let [destRangeStart, srcRangeStart, rangeLength] = map (read @Int) $ words s
-     in ((srcRangeStart, srcRangeStart + rangeLength - 1), (destRangeStart, destRangeStart + rangeLength - 1))
+  where
+    parseLine :: String -> (Range, Range)
+    parseLine s =
+      let
+        [destRangeStart, srcRangeStart, rangeLength] = map (read @Int) $ words s
+       in
+        ((srcRangeStart, srcRangeStart + rangeLength - 1), (destRangeStart, destRangeStart + rangeLength - 1))
 
 transform :: [Int] -> [(Range, Range)] -> [Int]
 transform xs ranges = map go xs
- where
-  go :: Int -> Int
-  go x = case find (\(src, _) -> inRange src x) ranges of
-    Nothing -> x
-    Just ((srcStart, srcEnd), (destStart, destEnd)) -> destStart + (x - srcStart)
+  where
+    go :: Int -> Int
+    go x = case find (\(src, _) -> inRange src x) ranges of
+      Nothing -> x
+      Just ((srcStart, _srcEnd), (destStart, _destEnd)) -> destStart + (x - srcStart)
 
 toPairs :: [Int] -> [(Int, Int)]
 toPairs (x : y : xs) = (x, y) : toPairs xs
-toPairs [x] = []
+toPairs [_] = []
 toPairs [] = []
 
+day5 :: IO ()
 day5 = do
   input <- parseInput <$> readFile "input"
   print input.seeds

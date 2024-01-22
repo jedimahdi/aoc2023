@@ -4,17 +4,21 @@ import Data.Char (digitToInt, isDigit)
 import Data.Maybe
 import Data.Monoid
 
+main :: IO ()
 main = do
   f <- readFile "input"
-  let sol1 = part2 f
-  let x = sum [1, 2]
+  let
+    sol1 = part2 f
   print sol1
-  -- pure $ zip (part2 f) (lines f)
+
+-- pure $ zip (part2 f) (lines f)
 
 part1 :: String -> Int
 part1 s =
-  let ls = lines s
-   in sum $ map (\l -> read [fromJust $ firstNum l, fromJust $ lastNum l]) ls
+  let
+    ls = lines s
+   in
+    sum $ map (\l -> read [fromJust $ firstNum l, fromJust $ lastNum l]) ls
 
 part2 :: String -> Int
 part2 = sum . map ((\ns -> read (show (head ns) ++ show (last ns))) . parseNums) . lines
@@ -31,9 +35,9 @@ parseNums ('s' : 'i' : 'x' : cs) = 6 : parseNums ('i' : 'x' : cs)
 parseNums ('s' : 'e' : 'v' : 'e' : 'n' : cs) = 7 : parseNums ('e' : 'v' : 'e' : 'n' : cs)
 parseNums ('e' : 'i' : 'g' : 'h' : 't' : cs) = 8 : parseNums ('i' : 'g' : 'h' : 't' : cs)
 parseNums ('n' : 'i' : 'n' : 'e' : cs) = 9 : parseNums ('i' : 'n' : 'e' : cs)
-parseNums (c : cs) = parseNums cs
+parseNums (_ : cs) = parseNums cs
 
-foldNums :: (Monoid m) => (Char -> m) -> String -> m
+foldNums :: Monoid m => (Char -> m) -> String -> m
 foldNums m = foldMap (\c -> if isDigit c then m c else mempty)
 
 firstNum :: String -> Maybe Char

@@ -20,6 +20,7 @@ parseInput s =
 
 -- simRace :: (Int, Int) ->
 
+day6 :: IO ()
 day6 = do
   f <- readFile "input"
   print $ parseInput f
