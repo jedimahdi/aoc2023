@@ -10,6 +10,7 @@ import Debug.Trace (traceShow)
 import Prelude hiding (id)
 
 type WinningNumbers = Set Int
+
 type Numbers = [Int]
 
 data Card = Card

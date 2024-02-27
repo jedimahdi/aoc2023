@@ -21,7 +21,9 @@ import Text.Megaparsec qualified as M
 import Text.Megaparsec.Char qualified as M
 
 type Pos = (Int, Int)
+
 type Input = ([(Int, [Pos])], Set.Set Pos)
+
 type Parser = M.ParsecT Void String IO
 
 mkArray :: String -> Array Pos Char
